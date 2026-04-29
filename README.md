@@ -39,3 +39,23 @@ This data is stored locally in:
 - **Linux**: `~/.config/googlecalendarapp`
 
 When you restart the app, you automatically land where you left off — logged in and with your calendar.
+
+## Build Windows Installer (.exe)
+
+Create a distributable Windows installer with:
+
+```bash
+npm run dist:win
+```
+
+Output files are generated in:
+
+- `release/Google Calendar App Setup 1.0.0.exe`
+- `release/latest.yml`
+- `release/win-unpacked/`
+- `release/win-ia32-unpacked/`
+
+Notes:
+
+- The setup `.exe` supports both x64 and ia32 (32-bit) Windows targets.
+- Because this build is unsigned, Windows SmartScreen may show a warning on some PCs.
