@@ -4,7 +4,8 @@ Google Calendar as a Windows desktop app: a lightweight Electron wrapper around 
 
 ## Download
 
-[Google Calendar App Setup 1.0.0.exe]()
+**v1.0.0** -->
+[Google Calendar App Setup 1.0.0.exe](https://github.com/CI-Analytics/GoogleCalendarApp/releases/download/v1.0.0/Google.Calendar.App.Setup.1.0.0.exe)
 
 ## Quick Info
 
