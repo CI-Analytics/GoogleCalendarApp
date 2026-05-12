@@ -37,8 +37,9 @@ function createWindow() {
   // Get saved bounds or use defaults
   const savedBounds = getSavedWindowBounds();
   
-  // Set app icon path
-  const iconPath = path.join(__dirname, 'assets', 'icon.png');
+  // Use .ico on Windows so the taskbar shows the app icon correctly.
+  const iconFile = process.platform === 'win32' ? 'icon.ico' : 'icon.png';
+  const iconPath = path.join(__dirname, 'assets', iconFile);
   
   const windowConfig = {
     width: 1200,
