@@ -35,9 +35,19 @@
       "assets/**/*",
       "package.json"
     ],
+    "extraResources": [
+      {
+        "from": "assets/icon.ico",
+        "to": "assets/icon.ico"
+      },
+      {
+        "from": "assets/icon.png",
+        "to": "assets/icon.png"
+      }
+    ],
     "win": {
       "icon": "assets/icon.ico",
-      "signAndEditExecutable": true,
+      "signAndEditExecutable": false,
       "target": [
         {
           "target": "nsis",

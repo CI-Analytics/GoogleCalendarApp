@@ -1,8 +1,12 @@
-const { app, BrowserWindow, Menu } = require('electron');
+const { app, BrowserWindow, Menu, nativeImage } = require('electron');
 const path = require('path');
 const fs = require('fs');
 
 let mainWindow;
+
+if (process.platform === 'win32') {
+  app.setAppUserModelId('com.cianalytics.googlecalendarapp');
+}
 
 // File to persist window bounds
 const userDataPath = app.getPath('userData');
@@ -36,17 +40,23 @@ function saveWindowBounds() {
 function createWindow() {
   // Get saved bounds or use defaults
   const savedBounds = getSavedWindowBounds();
-  
-  // Use .ico on Windows so the taskbar shows the app icon correctly.
+
+  // Use the ICO on Windows for the runtime taskbar/window icon and PNG elsewhere.
+  // Windows is most reliable with .ico for the actual app window chrome.
   const iconFile = process.platform === 'win32' ? 'icon.ico' : 'icon.png';
-  const iconPath = path.join(__dirname, 'assets', iconFile);
+  const iconCandidates = [
+    path.join(process.resourcesPath, 'assets', iconFile),
+    path.join(__dirname, 'assets', iconFile)
+  ];
+  const iconPath = iconCandidates.find((candidate) => fs.existsSync(candidate)) || iconCandidates[1];
+  const appIcon = nativeImage.createFromPath(iconPath);
   
   const windowConfig = {
     width: 1200,
     height: 800,
     minWidth: 800,
     minHeight: 600,
-    icon: iconPath,
+    icon: appIcon,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
@@ -66,6 +76,10 @@ function createWindow() {
   }
 
   mainWindow = new BrowserWindow(windowConfig);
+
+  if (process.platform === 'win32' && !appIcon.isEmpty()) {
+    mainWindow.setIcon(appIcon);
+  }
 
   // Remove application menu (File, Edit, View, Window)
   Menu.setApplicationMenu(null);
